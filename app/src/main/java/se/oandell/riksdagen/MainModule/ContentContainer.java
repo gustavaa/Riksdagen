@@ -4,11 +4,16 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import se.oandell.riksdagen.R;
 
 /**
  * Created by Oscar on 2017-03-24.
@@ -24,6 +29,11 @@ public class ContentContainer extends LinearLayout{
 
     public ContentContainer(Context context) {
         super(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View newsView = inflater.inflate(R.layout.news_layout,null);
+
+
+
         this.setOrientation(LinearLayout.VERTICAL);
 
         //Create horizontal layout in which to place potential portrait and title text.
@@ -33,38 +43,14 @@ public class ContentContainer extends LinearLayout{
         this.addView(imageAndTitleLayout);
 
         //Title text
-        titleTextView = new TextView(context);
-        titleTextView.setTextSize(15);
-        titleTextView.setTextColor(Color.BLACK);
-        titleTextView.setTypeface(Typeface.DEFAULT_BOLD);
-
-        //Text body
-        contentTextView = new TextView(context);
-        contentTextView.setTextColor(Color.BLACK);
-        this.addView(contentTextView);
-
-        //Image view to display document author portraits
-        portraitImageView = new ImageView(context);
-        portraitImageView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        imageAndTitleLayout.addView(portraitImageView);
-        imageAndTitleLayout.addView(titleTextView);
-
-        bottomImageView = new ImageView(context);
-        bottomImageView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        this.addView(bottomImageView);
-
-        footerTextView = new TextView(context);
-        footerTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        this.addView(footerTextView);
+        titleTextView = (TextView) newsView.findViewById(R.id.news_title);
+        contentTextView = (TextView) newsView.findViewById(R.id.news_body);
+        footerTextView = (TextView) newsView.findViewById(R.id.news_footer);
+        bottomImageView = (ImageView) newsView.findViewById(R.id.news_image);
+        portraitImageView = (ImageView) newsView.findViewById(R.id.news_image_bottom);
 
 
-        this.setPadding(0,0,0,25);
-
-        //Black line to divide list items
-        divider = new View(context);
-        divider.setBackgroundColor(Color.BLACK);
-        divider.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
-        this.addView(divider);
+        this.addView(newsView);
     }
 
     public void addPortrait(Bitmap img){
